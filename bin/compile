@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+echo "-----> Modifying /etc/ssl/openssl.cnf ..."
+
+echo "
+[default_conf]
+ssl_conf = ssl_sect
+
+[ssl_sect]
+system_default = system_default_sect
+
+[system_default_sect]
+MinProtocol = TLSv1
+CipherString = DEFAULT@SECLEVEL=1" >> /etc/ssl/openssl.cnf
+
+if test $? -ne 0; then
+    echo "-----> Error modifying /etc/ssl/openssl.cnf ..."
+    exit 1
+fi
+
+echo "-----> ssl-tls-mod build completed."
